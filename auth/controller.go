@@ -41,7 +41,7 @@ func (s *AuthController) login(c *gin.Context) {
 	}
 
 	if token := login(user_login, s.data.Db); token != nil {
-		c.String(http.StatusOK, "jwt_token")
+		c.String(http.StatusOK, *token)
 	} else {
 		c.String(http.StatusNotFound, "No such user")
 	}

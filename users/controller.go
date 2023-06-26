@@ -2,6 +2,7 @@ package users
 
 import (
 	"dounis/appdata"
+	"dounis/auth"
 	"net/http"
 	"strconv"
 
@@ -22,6 +23,7 @@ func (c *UserController) Attach(r *gin.Engine) {
 	auth_group := r.Group("/users")
 
 	auth_group.GET("/", c.get_all_users)
+	auth_group.GET("/secret", auth.JWTMiddleware, c.supersecret_route)
 	auth_group.GET("/:id", c.get_user_by_id)
 }
 
@@ -56,4 +58,16 @@ func (s *UserController) get_user_by_id(c *gin.Context) {
 	} else {
 		c.Status(http.StatusNotFound)
 	}
+}
+
+// @Produce json
+// @Summary Super secret route
+// @Tags Users
+// @Success 200 {string} Secret string
+// @Failure 401 {string} Unauthorized
+// @Failure 404 {string} NotFound
+// @Router /users/secret [get]
+// @Security ApiKeyAuth
+func (s *UserController) supersecret_route(c *gin.Context) {
+	c.String(http.StatusOK, "Coucou")
 }

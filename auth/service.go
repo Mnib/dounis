@@ -11,8 +11,11 @@ func login(credentials userLogin, db *[]models.User) *string {
 
 	for _, u := range *db {
 		if u.Login == credentials.Login && u.Password == credentials.Password {
-			jwt_token := "my_token"
-			return &jwt_token
+			if token, err := getTokenForUser(Claims{Id: u.Id}); err != nil {
+				return nil
+			} else {
+				return &token
+			}
 		}
 	}
 

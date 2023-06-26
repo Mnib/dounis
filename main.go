@@ -13,6 +13,16 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
+// @title Dounis API
+// @version 1.0
+// @description Protech
+
+// @contact.name Marcel
+// @contact.email marceltournesol@gmail.com
+
+// @securityDefinitions.apikey ApiKeyAuth
+// @in header
+// @name Authorization
 func main() {
 	r := gin.Default()
 
